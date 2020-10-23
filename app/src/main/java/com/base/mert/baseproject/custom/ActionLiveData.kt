@@ -1,17 +1,15 @@
 package com.base.mert.baseproject.custom
 
-import android.arch.lifecycle.LifecycleOwner
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Observer
-import android.support.annotation.MainThread
 import android.util.Log
-import java.util.concurrent.atomic.AtomicBoolean
+import androidx.annotation.MainThread
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 
-class ActionLiveData<T> : MutableLiveData<T>() {
+class ActionLiveData<T>: MutableLiveData<T>() {
 
     @MainThread
-    override fun observe(owner: LifecycleOwner, observer: Observer<T?>) {
+    override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
 
         // Being strict about the observer numbers is up to you
         // I thought it made sense to only allow one to handle the event
@@ -19,7 +17,7 @@ class ActionLiveData<T> : MutableLiveData<T>() {
             throw Throwable("Only one observer at a time may subscribe to a ActionLiveData")
         }
 
-        super.observe(owner, Observer { data ->
+        super.observe(owner, androidx.lifecycle.Observer { data ->
             // We ignore any null values and early return
             if (data == null)
                 Log.i("mert", "Action LiveData null")

@@ -6,15 +6,15 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: "androidx.navigation.safeargs"
 
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "com.base.mert.baseproject"
-        minSdkVersion 18
-        targetSdkVersion 28
+        minSdkVersion 21
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -22,6 +22,12 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+    androidExtensions {
+        experimental = true
     }
     dataBinding {
         enabled = true
@@ -37,14 +43,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.core:core-ktx:1.0.1'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.2.0-rc01'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
 
-    implementation "com.google.dagger:dagger:2.17"
-    kapt "com.google.dagger:dagger-compiler:2.17"
+    implementation 'com.google.dagger:dagger:2.17'
+    kapt 'com.google.dagger:dagger-compiler:2.17'
+    implementation 'com.google.dagger:dagger-android-support:2.17'
+    implementation 'com.google.dagger:dagger-android:2.17'
     kapt "com.google.dagger:dagger-android-processor:2.17"
-    implementation "com.google.dagger:dagger-android-support:2.17"
+
 
     implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-rc01"
     implementation "androidx.lifecycle:lifecycle-viewmodel:2.0.0-rc01"

@@ -1,7 +1,7 @@
 package com.base.mert.baseproject.di.builder
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.base.mert.baseproject.annotations.ViewModelKey
 import com.base.mert.baseproject.di.factory.ViewModelFactory
 import com.base.mert.baseproject.vm.HomeFragmentViewModel

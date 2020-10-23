@@ -1,8 +1,9 @@
 package com.base.mert.baseproject.extensions
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.ViewModelProviders
-import android.support.v4.app.Fragment
+
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.base.mert.baseproject.di.factory.ViewModelFactory
 
 inline fun <reified T: ViewModel> Fragment.getViewModel(factory: ViewModelFactory, body: T.() -> Unit): T {

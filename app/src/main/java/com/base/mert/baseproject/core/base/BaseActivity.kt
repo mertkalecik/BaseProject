@@ -1,23 +1,19 @@
 package com.base.mert.baseproject.core.base
 
-import android.arch.lifecycle.ViewModelProviders
-import android.databinding.DataBindingUtil
-import android.databinding.ViewDataBinding
+
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
+import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProviders
 import com.base.mert.baseproject.R
 import com.base.mert.baseproject.di.factory.ViewModelFactory
 import dagger.android.AndroidInjection
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import dagger.android.support.DaggerFragment
 import dagger.android.support.HasSupportFragmentInjector
-import kotlinx.android.synthetic.main.activity_login.view.*
 import javax.inject.Inject
 
 abstract class BaseActivity<VM: BaseViewModel, DB: ViewDataBinding>(private val viewModelClazz: Class<VM>): AppCompatActivity(), HasSupportFragmentInjector {
@@ -44,7 +40,7 @@ abstract class BaseActivity<VM: BaseViewModel, DB: ViewDataBinding>(private val 
         super.onCreate(savedInstanceState)
 
         intent.extras?.let {
-            readBundle(intent.extras)
+            readBundle(it)
         }
 
         configureViewModel(vm)
@@ -57,7 +53,7 @@ abstract class BaseActivity<VM: BaseViewModel, DB: ViewDataBinding>(private val 
     }
 
     private fun initToolbar() {
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
         if (toolbar != null)
             setSupportActionBar(toolbar)
         supportActionBar!!.setTitle("Login")
@@ -68,5 +64,5 @@ abstract class BaseActivity<VM: BaseViewModel, DB: ViewDataBinding>(private val 
     abstract fun configureDataBinding(binding: DB)
     abstract fun readBundle(bundle: Bundle)
 
-    override fun supportFragmentInjector(): AndroidInjector<android.support.v4.app.Fragment> = fragmentInjector
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> = fragmentInjector
 }
