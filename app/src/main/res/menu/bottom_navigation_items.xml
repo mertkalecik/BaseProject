@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <item android:id="@+id/action_hazard"
-        android:title="Risky"
-        android:icon="@drawable/ic_broken_image_24dp"/>
-
-    <item android:id="@+id/action_map"
-        android:title="Map"
-        android:icon="@drawable/ic_map_24dp" />
-
-    <item android:id="@+id/action_home"
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/home"
         android:title="Home"
         android:icon="@drawable/ic_home_24dp" />
-
-    <item android:id="@+id/action_settings"
-        android:title="Person"
-        android:icon="@drawable/ic_person_24dp" />
-
 </menu>

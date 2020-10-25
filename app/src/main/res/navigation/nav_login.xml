@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/loginIdPassFragment"
-        android:name="com.base.mert.baseproject.ui.fragment.LoginIdPassFragment"
+        android:name="com.base.mert.ing.ui.fragment.LoginIdPassFragment"
         android:label="Login Ekranı"
         tools:layout="@layout/fragment_login_id_pass" />
 

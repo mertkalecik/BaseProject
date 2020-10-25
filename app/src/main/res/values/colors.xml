@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#050430</color>
     <color name="colorAccent">#0b0b38</color>
 
+    <color name="transparentDarkBlue">#330b0b38</color>
     <color name="White">#FFFFFF</color>
     <color name="Ivory">#FFFFF0</color>
     <color name="LightYellow">#FFFFE0</color>
