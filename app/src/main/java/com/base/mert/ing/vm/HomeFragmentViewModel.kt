@@ -5,36 +5,75 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.base.mert.ing.core.base.BaseViewModel
 import com.base.mert.ing.custom.ActionLiveData
-import com.base.mert.ing.ui.data.home.GithubRepository
+import com.base.mert.ing.mapper.toRepoEntity
+import com.base.mert.ing.ui.data.home.DataSource
+import com.base.mert.ing.ui.data.home.Person
 import com.base.mert.ing.ui.data.home.RepoEntity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class HomeFragmentViewModel @Inject constructor(
-        application: Application,
-        val repository: GithubRepository
+        application: Application
 ): BaseViewModel(application) {
+
+    companion object {
+        const val DELAY = 5L
+    }
     val responseLiveData = ActionLiveData<List<RepoEntity>>()
+    val cachedList: MutableList<RepoEntity> = mutableListOf()
+    val disposable = CompositeDisposable()
     val progress = MutableLiveData<Boolean>()
-    val adapterList = mutableListOf<RepoEntity>()
+    val dataSource by lazy { DataSource() }
+    var query:String? = null
+    var isAllowed = true
 
-    fun getRepos(userName: String) {
+    fun onRefresh() {
+        if (isAllowed) getPersonList() else progress.postValue(false)
+        isAllowed = false
+        disposable.add(
+                Observable.timer(DELAY, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnError {  }
+                        .subscribe {
+                            isAllowed = true
+                        }
+        )
+    }
+
+    private fun getPersonList() {
         progress.postValue(true)
-        repository.getRepos(userName).enqueue(object: Callback<List<RepoEntity>> {
-            override fun onFailure(call: Call<List<RepoEntity>>, t: Throwable) {
-                progress.postValue(false)
-                Log.i("Mert","Network Error")
+        dataSource.fetch(query) { response, error ->
+            response?.let {
+                query = it.next
+                unionList(it.people)
             }
-
-            override fun onResponse(call: Call<List<RepoEntity>>, response: Response<List<RepoEntity>>) {
+            error?.let {
                 progress.postValue(false)
-                response.body()?.let {
-                    responseLiveData.sendAction(it)
-                } ?: kotlin.run { Log.i("Mert", "Repository list is null") }
+                Log.i("Mert","Error ${it.errorDescription}")
             }
+        }
+    }
 
-        })
+    private fun unionList(pagedList: List<Person>) {
+        val list = pagedList.map { it.toRepoEntity() }
+        cachedList.orEmpty().toMutableList().also { unifiedList ->
+            list.forEach { entity ->
+                unifiedList.firstOrNull {
+                    it.id == entity.id
+                }?.let { Unit } ?: cachedList.add(entity)
+            }
+        }
+        progress.postValue(false)
+        responseLiveData.sendAction(cachedList)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        disposable.dispose()
     }
 }

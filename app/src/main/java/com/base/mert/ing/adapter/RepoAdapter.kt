@@ -9,10 +9,8 @@ import com.base.mert.ing.databinding.ItemRepoBinding
 import com.base.mert.ing.ui.data.home.RepoEntity
 
 class RepoAdapter(
-        private val mutableList: List<RepoEntity>
+        private val mutableList: MutableList<RepoEntity>
 ) :RecyclerView.Adapter<RepoAdapter.RepoViewHolder>() {
-
-    var clickListener: (entity: RepoEntity) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoViewHolder {
         val binding = DataBindingUtil.inflate<ItemRepoBinding>(
@@ -23,7 +21,6 @@ class RepoAdapter(
         )
         return RepoViewHolder(binding)
     }
-
     override fun getItemCount(): Int = mutableList.size
 
     override fun getItemViewType(position: Int): Int = R.layout.item_repo
@@ -34,11 +31,6 @@ class RepoAdapter(
         fun bind() {
             binding.executePendingBindings()
             binding.data = mutableList[adapterPosition]
-            binding.apply {
-                root.setOnClickListener {
-                    clickListener.invoke(mutableList[adapterPosition])
-                }
-            }
         }
     }
 }

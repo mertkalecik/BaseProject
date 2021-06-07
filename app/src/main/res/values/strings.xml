@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">DEV ING</string>
-    <string name="welcome_message">Hello from Manisa!</string>
-    <string name="btn_submit">Submıt</string>
+    <string name="app_name">Scorp Interview</string>
+    <string name="welcome_message">Hello Scorp!</string>
+    <string name="btn_submit">Submit</string>
     <string name="search_hint">Username</string>
     <string name="btn_login">Login</string>
     <string name="owner">Owner</string>

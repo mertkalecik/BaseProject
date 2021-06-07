@@ -4,7 +4,6 @@ package com.base.mert.ing.di.component
 import com.base.mert.ing.di.builder.ActivityBuilder
 import com.base.mert.ing.di.builder.ViewModelBuilder
 import com.base.mert.ing.di.module.AppModule
-import com.base.mert.ing.di.module.RetrofitModule
 import com.base.mert.ing.ui.application.BaseProjectApplication
 import dagger.BindsInstance
 import dagger.Component
@@ -18,8 +17,7 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         AndroidSupportInjectionModule::class,
         ViewModelBuilder::class,
-        ActivityBuilder::class,
-        RetrofitModule::class
+        ActivityBuilder::class
 ))
 interface AppComponent {
 
